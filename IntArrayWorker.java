@@ -29,6 +29,63 @@ public class IntArrayWorker
   }
   
   /**
+   * Method to return the count of a value
+   * @return number of times passed value is found in matrix
+   */
+  public int getCount(int value)
+  {
+    int count = 0;
+    for (int row = 0; row < matrix.length; row++)
+    {
+      for (int col = 0; col < matrix[0].length; col++)
+      {
+		if (matrix[row][col] == value) {
+			count++;
+		}
+      }
+    }
+    return count;
+  }
+  
+  /**
+   * Method to return the largest value
+   * @return largest value found in the matrix
+   */
+  public int getLargest()
+  {
+    int largest = 0;
+    for (int row = 0; row < matrix.length; row++)
+    {
+      for (int col = 0; col < matrix[0].length; col++)
+      {
+		if (matrix[row][col] > largest) {
+			largest = matrix[row][col];
+		}
+      }
+    }
+    return largest;
+  }
+  
+   /**
+   * Method to return the total of all integers in a specified column
+   * @return total of all integers in the column
+   */
+  public int getColTotal(int column)
+  {
+    int total = 0;
+    for (int row = 0; row < matrix.length; row++)
+    {
+      for (int col = 0; col < matrix[0].length; col++)
+      {
+		if (col == column) {
+			total = total + matrix[row][col];
+		}
+      }
+    }
+    return total;
+  }
+  
+  /**
    * Method to return the total using a nested for-each loop
    * @return the total of the values in the array
    */
@@ -60,6 +117,30 @@ public class IntArrayWorker
         count++;
       }
     }
+  }
+  
+  /**
+   * reverse the rows and columns in the matrix
+   */
+  public void reverseRows() {
+	for (int i = 0; i < matrix.length; i++)
+    {
+		int start = 0;
+		int end = matrix[0].length - 1;
+		
+		while (start < end) {
+  
+            // Swap the element
+            int temp = matrix[i][start];
+            matrix[i][start] = matrix[i][end];
+            matrix[i][end] = temp;
+  
+            // Increment start and decrement
+            // end for next pair of swapping
+            start++;
+            end--;
+        }
+     }  
   }
   
   /**

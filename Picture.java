@@ -142,6 +142,49 @@ public class Picture extends SimplePicture
     } 
   }
   
+  /** To pixelate by dividing area into size x size.
+   * @param size Side length of square area to pixelate.
+   */
+  public void pixelate(int size) {
+	  Pixel[][] pixels = this.getPixels2D();
+	  int rowLength = pixels.length;
+	  int colLength = pixels[0].length;
+	  
+	  int rowRemaining = rowLength
+	  int colRemaining = colLength/size;
+	  int blue = 0;
+	  int red = 0;
+	  int green = 0;
+	  
+	  for (int row = 0; row < rowLength; row++) {
+		  for (int column = 0; column < colLength; column++) {
+			  for (int i = 0; i < size; i++) {
+				  blue += pixels[row + i][column].getBlue();
+				  blue += pixels[row][column+i].getBlue();
+				  red += pixels[row + i][column].getRed();
+				  red += pixels[row][column+i].getRed();
+				  green += pixels[row + i][column].getGreen();
+				  green += pixels[row][column+i].getGreen();
+			  }
+			  
+			  blue = blue/6;
+			  red = red/6;
+			  green = green/6;
+			  
+			  for (int i = 0; i < size; i++) {
+				  pixels[row + i][column].setBlue(blue);
+				  pixels[row + i][column].setRed(blue);
+				  pixels[row + i][column].setGreen(blue);
+				  pixels[row][column + i].setBlue(blue);
+				  pixels[row][column + i].setRed(blue);
+				  pixels[row][column + i].setGreen(blue);
+			  }
+		  } 
+	  }
+	  
+  
+  }
+  
   
   /** Method that mirrors the picture around a 
     * vertical mirror in the center of the picture

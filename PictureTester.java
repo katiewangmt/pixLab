@@ -8,6 +8,16 @@
  */
 public class PictureTester
 {
+  /** Method to test pixelate */
+  public static void testPixelate(int size)
+  {
+    Picture beach = new Picture("images/beach.jpg");
+    beach.explore();
+    beach.pixelate(size);
+    beach.explore();
+  }
+  
+  
   /** Method to test zeroBlue */
   public static void testZeroBlue()
   {
@@ -91,7 +101,8 @@ public class PictureTester
     //testKeepOnlyRed();
     //testKeepOnlyGreen();
     //testNegate();
-    testGrayscale();
+    //testGrayscale();
+    testPixelate(50);
     //testFixUnderwater();
     //testMirrorVertical();
     //testMirrorTemple();
