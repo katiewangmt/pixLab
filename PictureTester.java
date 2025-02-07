@@ -8,6 +8,17 @@
  */
 public class PictureTester
 {
+	
+  /** Method to test blur */
+  public static void testBlur(int size)
+  {
+    Picture beach = new Picture("images/beach.jpg");
+    beach.explore();
+    beach.blur(size);
+    beach.explore();
+  }
+  
+  
   /** Method to test pixelate */
   public static void testPixelate(int size)
   {
@@ -102,7 +113,8 @@ public class PictureTester
     //testKeepOnlyGreen();
     //testNegate();
     //testGrayscale();
-    testPixelate(50);
+    //testPixelate(10);
+    testBlur(10);
     //testFixUnderwater();
     //testMirrorVertical();
     //testMirrorTemple();

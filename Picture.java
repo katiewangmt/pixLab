@@ -147,43 +147,97 @@ public class Picture extends SimplePicture
    */
   public void pixelate(int size) {
 	  Pixel[][] pixels = this.getPixels2D();
-	  int rowLength = pixels.length;
-	  int colLength = pixels[0].length;
+	  int width = pixels.length;
+	  int height = pixels[0].length;
 	  
-	  int rowRemaining = rowLength
-	  int colRemaining = colLength/size;
-	  int blue = 0;
-	  int red = 0;
-	  int green = 0;
+	  for (int row = 0; row < width; row += size) {
+		  for (int col = 0; col < height; col += size) {
+			  pixelateBlock(row, col, size);
+		  }  
+	  }
+  }
+  
+  /** Helper method to pixelate 
+   * @param starting row, starting column, size of grid to pixelate
+   */
+  private void pixelateBlock(int startRow, int startCol, int size){
+	  Pixel[][] pixels = this.getPixels2D();
+	  int width = pixels.length;
+	  int height = pixels[0].length;
 	  
-	  for (int row = 0; row < rowLength; row++) {
-		  for (int column = 0; column < colLength; column++) {
-			  for (int i = 0; i < size; i++) {
-				  blue += pixels[row + i][column].getBlue();
-				  blue += pixels[row][column+i].getBlue();
-				  red += pixels[row + i][column].getRed();
-				  red += pixels[row][column+i].getRed();
-				  green += pixels[row + i][column].getGreen();
-				  green += pixels[row][column+i].getGreen();
-			  }
-			  
-			  blue = blue/6;
-			  red = red/6;
-			  green = green/6;
-			  
-			  for (int i = 0; i < size; i++) {
-				  pixels[row + i][column].setBlue(blue);
-				  pixels[row + i][column].setRed(blue);
-				  pixels[row + i][column].setGreen(blue);
-				  pixels[row][column + i].setBlue(blue);
-				  pixels[row][column + i].setRed(blue);
-				  pixels[row][column + i].setGreen(blue);
-			  }
-		  } 
+	  int redSum = 0, greenSum = 0, blueSum = 0;
+	  int count = 0;
+	  
+	  for (int row = startRow; row < startRow + size && row < width; row++) {
+		  for (int col = startCol; col < startCol + size && col < height; col++) {
+			  redSum += pixels[row][col].getRed();
+			  greenSum += pixels[row][col].getGreen();
+			  blueSum += pixels[row][col].getBlue();
+			  count++;
+		  }
 	  }
 	  
-  
+	  if (count == 0) return;
+	  
+	  int avgRed = redSum / count;
+	  int avgGreen = greenSum / count;
+	  int avgBlue = blueSum / count;
+	   
+	  for (int row = startRow; row < startRow + size && row < width; row++) {
+		  for (int col = startCol; col < startCol + size && col < height; col++) {
+			  pixels[row][col].setRed(avgRed);
+			  pixels[row][col].setGreen(avgGreen);
+			  pixels[row][col].setBlue(avgBlue);
+		  }
+	  }
   }
+  
+  
+   /** Method that blurs the picture
+	* @param size Blur size, greater is more blur
+	* @return Blurred picture
+	*/
+	public Picture blur(int size)
+	{
+		Pixel[][] pixels = this.getPixels2D();
+		Picture result = new Picture(pixels.length, pixels[0].length);
+		Pixel[][] resultPixels = result.getPixels2D();
+		
+		int height = pixels.length;
+		int width = pixels[0].length;
+		
+		for (int r = 0; r < height; r++) {
+			for (int c = 0; c < width; c++) {
+				resultPixels[r][c] = getBlurredPixel(pixels, r, c, size, height, width);
+			}
+		}
+	}
+  
+   /** Helper method to blur
+	* @param pixels 2D array, row, column, size of blur, picture height and width
+	* @return the blurred pixel
+	*/
+	private Pixel getBlurredPixel(Pixel[][] pixels, int row, int col, int size, int height, int width)
+	{
+		int rStart = Math.max(0, row - size/2);
+		int rEnd = Math.min(height - 1, row + size/2);
+		int cStart = Math.max(0, col - size/2);
+		int cEnd = Math.min(width-1, col + size/2);
+		
+		int sumRed = 0, sumGreen = 0, sumBlue = 0, count = 0;
+		
+		for (int r = rStart; r <= rEnd; r++) {
+			for (int c = cStart; c <= cEnd; c++) {
+				Pixel p = pixel[r][c];
+				sumRed += p.getRed();
+				sumGreen += p.getGreen();
+				sumBlue += p.getBlue();
+				count++;
+			}
+		}
+		
+		return new Pixel(sumRed/count, sumGreen/count, sumBlue/count);
+	}
   
   
   /** Method that mirrors the picture around a 
