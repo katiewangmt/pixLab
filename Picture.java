@@ -203,42 +203,56 @@ public class Picture extends SimplePicture
 		Picture result = new Picture(pixels.length, pixels[0].length);
 		Pixel[][] resultPixels = result.getPixels2D();
 		
-		int height = pixels.length;
-		int width = pixels[0].length;
+		int width = pixels.length;
+		int height = pixels[0].length;
 		
-		for (int r = 0; r < height; r++) {
-			for (int c = 0; c < width; c++) {
-				resultPixels[r][c] = getBlurredPixel(pixels, r, c, size, height, width);
-			}
-		}
-	}
-  
-   /** Helper method to blur
-	* @param pixels 2D array, row, column, size of blur, picture height and width
-	* @return the blurred pixel
-	*/
-	private Pixel getBlurredPixel(Pixel[][] pixels, int row, int col, int size, int height, int width)
-	{
-		int rStart = Math.max(0, row - size/2);
-		int rEnd = Math.min(height - 1, row + size/2);
-		int cStart = Math.max(0, col - size/2);
-		int cEnd = Math.min(width-1, col + size/2);
-		
-		int sumRed = 0, sumGreen = 0, sumBlue = 0, count = 0;
-		
-		for (int r = rStart; r <= rEnd; r++) {
-			for (int c = cStart; c <= cEnd; c++) {
-				Pixel p = pixel[r][c];
-				sumRed += p.getRed();
-				sumGreen += p.getGreen();
-				sumBlue += p.getBlue();
-				count++;
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				int r = 0, g = 0, b = 0;
+				int count = 0;
+	
+				for (int dx = -size; dx <= size; dx++) {
+					for (int dy = -size; dy <= size; dy++) {
+						int newX = x + dx;
+						int newY = y + dy;
+						
+						if (newX >= 0 && newX < width && newY >= 0 && newY < height) {
+							r += pixels[newX][newY].getRed();
+							g += pixels[newX][newY].getGreen();
+							b += pixels[newX][newY].getBlue();
+							count++;
+						}	
+					}
+				}
+				
+				if (count > 0) {
+					resultPixels[x][y].setRed(r/count);
+					resultPixels[x][y].setGreen(g/count);
+					resultPixels[x][y].setBlue(b/count);
+				}
 			}
 		}
 		
-		return new Pixel(sumRed/count, sumGreen/count, sumBlue/count);
+		return result;
 	}
-  
+	
+	 /** Method that enhances a picture by getting average Color around
+	  * a pixel then applies the following formula:
+	  *
+	  * pixelColor <- 2 * currentValue - averageValue
+	  *
+	  * size is the area to sample for blur.
+	  *
+	  * @param size Larger means more area to average around pixel
+	  * and longer compute time.
+	  * @return enhanced picture
+	  */
+	 public Picture enhance(int size)
+	 {
+	 Pixel[][] pixels = this.getPixels2D();
+	 Picture result = new Picture(pixels.length, pixels[0].length);
+	 Pixel[][] resultPixels = result.getPixels2D();
+	 }
   
   /** Method that mirrors the picture around a 
     * vertical mirror in the center of the picture
