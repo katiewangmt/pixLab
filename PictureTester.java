@@ -114,7 +114,7 @@ public class PictureTester
     //testNegate();
     //testGrayscale();
     //testPixelate(10);
-    testBlur(20);
+    testBlur(40);
     //testFixUnderwater();
     //testMirrorVertical();
     //testMirrorTemple();
