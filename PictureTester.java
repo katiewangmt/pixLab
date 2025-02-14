@@ -8,27 +8,6 @@
  */
 public class PictureTester
 {
-	
-  /** Method to test blur */
-  public static void testBlur(int size)
-  {
-    Picture beach = new Picture("images/beach.jpg");
-    beach.explore();
-    beach.blur(size);
-    beach.explore();
-  }
-  
-  
-  /** Method to test pixelate */
-  public static void testPixelate(int size)
-  {
-    Picture beach = new Picture("images/beach.jpg");
-    beach.explore();
-    beach.pixelate(size);
-    beach.explore();
-  }
-  
-  
   /** Method to test zeroBlue */
   public static void testZeroBlue()
   {
@@ -64,8 +43,84 @@ public class PictureTester
     beach.grayscale();
     beach.explore();
   }
-  
-  
+
+  /** Method to test fixUnderwater */
+  public static void testFixUnderwater()
+  {
+    Picture water = new Picture("images/water.jpg");
+    water.explore();
+    water.fixUnderwater();
+    water.explore();
+  }
+
+  /** Method to test addWatermark */
+  public static void testAddWatermark()
+  {
+    Picture beach = new Picture("images/beach.jpg");
+    beach.explore();
+    beach.addWatermark();
+    beach.explore();
+  }
+
+  /** Method to test pixelate */
+  public static void testPixelate(int size)
+  {
+    Picture beach = new Picture("images/beach.jpg");
+    beach.explore();
+    beach.pixelate(size);
+    beach.explore();
+  }
+
+  /** Method to test blur */
+  public static void testBlur(int size)
+  {
+    Picture beach = new Picture("images/beach.jpg");
+    beach.explore();
+    beach.blur(size).explore();
+  }
+
+  /** Method to test enhance */
+  public static void testEnhance(int size)
+  {
+    Picture beach = new Picture("images/water.jpg");
+    beach.explore();
+    beach.enhance(size).explore();
+  }
+
+  /** Method to test shiftHalfWidth */
+  public static void testSwapLeftRight()
+  {
+    // Load an original picture
+    Picture beach = new Picture("images/redMotorcycle.jpg");
+    beach.explore(); 
+    beach.swapLeftRight().explore();
+  }
+
+  /** Method to test stairStep */
+  public static void testStairStep(int shiftCount, int steps)
+  {
+    Picture motorcycle = new Picture("images/redMotorcycle.jpg");
+    motorcycle.explore();
+    motorcycle.stairStep(shiftCount, steps).explore();
+  }
+
+  /** Method to test liquify */
+  public static void testLiquify(int maxHeight)
+  {
+    // 1. Load a picture you want to liquify
+    Picture insideOut = new Picture("images/temple.jpg");
+    insideOut.explore();
+    insideOut.liquify(maxHeight).explore();
+  }
+
+  /** Method to test wavy */
+  public static void testWavy(int amplitude)
+  {
+    Picture stillLife = new Picture("images/gorge.jpg");
+    stillLife.explore(); 
+    stillLife.wavy(amplitude).explore();
+  }
+
   /** Method to test mirrorVertical */
   public static void testMirrorVertical()
   {
@@ -108,14 +163,20 @@ public class PictureTester
     // and comment out the ones you don't want
     // to run
     //testZeroBlue();
-	//testKeepOnlyBlue();
+	  //testKeepOnlyBlue();
     //testKeepOnlyRed();
     //testKeepOnlyGreen();
     //testNegate();
     //testGrayscale();
-    //testPixelate(10);
-    testBlur(40);
-    //testFixUnderwater();
+    //testPixelate(5);
+    //testBlur(20);
+    testEnhance(20);
+    testFixUnderwater();
+    testAddWatermark();
+    testSwapLeftRight();
+    //testStairStep(1, 400);
+    //testLiquify(100);
+    //testWavy(20);
     //testMirrorVertical();
     //testMirrorTemple();
     //testMirrorArms();
