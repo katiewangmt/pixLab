@@ -155,6 +155,22 @@ public class PictureTester
     swan.explore();
   }
   
+  /** Method to test edgeDetectionBelow */
+  public static void testEdgeDetectionBelow(int threshold)
+  {
+    Picture swan = new Picture("images/swan.jpg");
+    swan.edgeDetectionBelow(threshold).explore();
+  }
+  
+  /** Method to test greenScreen */
+  public static void testGreenScreen()
+  {
+	// choose any picture to start since it will *not* be used
+	Picture pic = new Picture("images/beach.jpg");
+	Picture gScreen = pic.greenScreen();
+	gScreen.explore();
+  } 
+  
   /** Main method for testing.  Every class can have a main
     * method in Java */
   public static void main(String[] args)
@@ -163,17 +179,17 @@ public class PictureTester
     // and comment out the ones you don't want
     // to run
     //testZeroBlue();
-	  //testKeepOnlyBlue();
+	//testKeepOnlyBlue();
     //testKeepOnlyRed();
     //testKeepOnlyGreen();
     //testNegate();
     //testGrayscale();
     //testPixelate(5);
     //testBlur(20);
-    testEnhance(20);
-    testFixUnderwater();
-    testAddWatermark();
-    testSwapLeftRight();
+    //testEnhance(20);
+    //testFixUnderwater();
+    //testAddWatermark();
+    //testSwapLeftRight();
     //testStairStep(1, 400);
     //testLiquify(100);
     //testWavy(20);
@@ -185,6 +201,8 @@ public class PictureTester
     //testCollage();
     //testCopy();
     //testEdgeDetection();
+    //testEdgeDetectionBelow(10);
+    testGreenScreen();
     //testEdgeDetection2();
     //testChromakey();
     //testEncodeAndDecode();
